@@ -12,4 +12,4 @@ FROM openjdk:8
 COPY --from=build /target/beshop-springboot.jar beshop-springboot.jar
 # ENV PORT=8080
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","beshop-springboot.jar.jar"]
+ENTRYPOINT ["java","-jar","beshop-springboot.jar"]
