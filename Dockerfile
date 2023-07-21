@@ -1,8 +1,15 @@
-# Base Alpine Linux based image with OpenJDK JRE only
+#
+# Build stage
+#
+FROM maven:3.8.2-jdk-8 AS build
+COPY . .
+RUN mvn clean package -Pprod -DskipTests
+
+#
+# Package stage
+#
 FROM openjdk:8
-# port
+COPY --from=build /target/beshop-springboot.jar beshop-springboot.jar
+# ENV PORT=8080
 EXPOSE 8080
-# copy application WAR (with libraries inside)
-ADD beshop/target/beshop-springboot.jar beshop-springboot.jar
-# specify default command
-ENTRYPOINT ["java", "-jar", "beshop-springboot.jar"]
+ENTRYPOINT ["java","-jar","beshop-springboot.jar.jar"]
